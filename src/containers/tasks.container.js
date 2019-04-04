@@ -1,9 +1,8 @@
 import React from 'react';
+import Task from '../components/task.component';
+import styled from 'styled-components'; 
 import PropTypes from 'prop-types';
 
-const propTypes = {};
-
-const defaultProps = {};
 
 export default class Tasks extends React.Component {
     constructor(props) {
@@ -31,38 +30,34 @@ export default class Tasks extends React.Component {
 
     handleCompletedTask = (e) => {
         this.setState(state => {
-            console.log(state.not_started);
-            const not_started_tasks = state.not_started.map((task, index) => {
-                console.log(index, e)
+            const tasks = state.not_started.map((task, index) => {
+                console.log('e', e, 'index', index);
                 if (index === e) {
-                    console.log(index, e)
-                    state.complete.push(task);
-                    state.not_started.splice(index, e);
                     task.status = 'complete'
-                    return task;
-                } else return task;
-                
+                    state.complete.unshift(task);
+                    state.not_started.splice((index, e), 1)
+                    return;
+                }
+                else return;
             });
-
-            return not_started_tasks;
-
+            return tasks;
         });
-
-        console.log('after click not_started status: ', this.state.not_started);
     }
 
     render() {
         return (
-            <React.Fragment>
+            <StyledWrapper>
                 <h2>NOT STARTED</h2>
                 <ul>
                     {
-                        this.state.not_started.map((t, index) => {
+                        this.state.not_started.map((task, index) => {
                         return (
-                            <li key={t.description}>
-                                <button onClick={() => this.handleCompletedTask(index)} value={t.id}>ICON</button>
-                                {` ${t.description} - status ${t.status} `}
-                            </li>
+                            <Task key={task.id} 
+                                clicked={ () => this.handleCompletedTask(index) }
+                                status='not_started'
+                                task={ task.description }
+                                value={ task.id } />
+                           
                             )
                         })
                     }
@@ -73,20 +68,24 @@ export default class Tasks extends React.Component {
                 
                 <ul>
                     {
-                        this.state.complete.map(t => {
+                        this.state.complete.map(task => {
                         return (
-                            <li key={t.description}>
-                                <input type="button" value={t.id} ref={t.id} />
-                                {` ${t.description} - status ${t.status} `}
-                            </li>
+                            <Task key={ task.id } 
+                                status='complete'
+                                task={ task.description }
+                                value={ task.id } />
                             )
                         })
                     }
                 </ul>
-            </React.Fragment>
+            </StyledWrapper>
         );
     }
 }
 
-Tasks.propTypes = propTypes;
-Tasks.defaultProps = defaultProps;
+
+const StyledWrapper = styled.div`
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+`;
