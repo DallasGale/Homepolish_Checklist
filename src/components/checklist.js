@@ -10,6 +10,15 @@ const StyledChecklist = styled.div`
 
 const Checklist = ({ tasks }) => (
   <StyledChecklist>
+    <ul>
+        {
+            tasks.map(t => {
+              return (
+                <li>{` ${t.description} - status ${t.status} `}</li>
+                )
+              })
+        }
+    </ul>
     <div>The checklist</div>
   </StyledChecklist>
 );

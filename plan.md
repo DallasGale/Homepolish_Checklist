@@ -5,25 +5,9 @@
 
 this.state = {
     completedAlert: false,
-    todos: [
-        {
-            name: 'To do task #1',
-            not_started: true,
-            completed: false,
-        },
-        {
-            name: 'To do task #2',
-            not_started: true,
-            completed: false,
-        },
-        { ... },
-        {
-            name: 'To do task #5',
-            not_started: true,
-            completed: false,
-        },
-    ], 
-    todoCompleted: '',
+    todos: [],
+    notStarted: [],
+    completed: [], 
 }
 
 ```
@@ -46,15 +30,18 @@ this.state = {
 **Handler functions**
 ```javascript
 // to be assigned to the not_started todos button.
-handleCompletedTodo = (e) => {
-    this.setState({
-        completedAlert: true,
-        todos: [
-            not_started: false,
-            completed: true,
-        ],
-        todoCompleted: e.target.value,
-    })
+handleCompletedTodo = (e, todo) => {
+    
+    if (todo === e.target.value) {
+        this.setState({
+            status: 'completed'
+        })
+        this.state.completed.push(todo);
+
+    } else {
+        return;
+    }
+
 }
 
 ```
@@ -112,28 +99,28 @@ class Todos extends React.Compomnent {
     render() {
         const todos = this.state.todos;
 
-        const completedTodos = todos.filter(todo => {
-            if (todo.not_started) {
-                return <TodoItem statusClass="not_started" todo={ todo.name } handleClick={() => this.handleCompletedTodo()} />
-            }
-        })
+        // const completedTodos = todos.filter(todo => {
+        //     if (todo.not_started) {
+        //         return <TodoItem statusClass="not_started" todo={ todo.name } handleClick={() => this.handleCompletedTodo()} />
+        //     }
+        // })
 
-        const notStartedTodos = todos.filter(todo => {
-            if (todo.completed) {
-                return  <TodoItem statusClass="completed" todo={ todo.name } />
-            }
-        });
+        // const notStartedTodos = todos.filter(todo => {
+        //     if (todo.completed) {
+        //         return  <TodoItem statusClass="completed" todo={ todo.name } />
+        //     }
+        // });
 
         
         return (
             <>
                 { this.state.completedAlert ? <CompletedAlert name={ this.state.todoCompleted } /> : '' }
                 <NotStartedList>
-                    { notStartedTodos }
+                    { this.state.notStarted }
                 </NotStartedList>
 
                 <CompletedList>
-                    { completedTodos }
+                    { this.state.completed }
                 </CompletedList>
             </>
         )
