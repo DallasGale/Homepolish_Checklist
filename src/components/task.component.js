@@ -10,8 +10,7 @@ const Task = (props) => {
     useEffect(() => setMount(true));
 
     return (
-        <StyledTask 
-            visible={mounted}>
+        <StyledTask visible={mounted}>
             <Toggle {...props }/>
             <StyledText>
                 { props.task }

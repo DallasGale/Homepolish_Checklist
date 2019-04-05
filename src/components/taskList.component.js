@@ -34,10 +34,9 @@ const TaskList = (props) => {
                 </StylesUl>
             </React.Fragment>
             : 
-
             <React.Fragment>
                 <StylesUl>
-                    <StylesH2>{count} {title}</StylesH2>
+                    <StylesH2 color="grey">{count} {title}</StylesH2>
                     {
                         data.map((task, arrIndex) => {
                         return (
