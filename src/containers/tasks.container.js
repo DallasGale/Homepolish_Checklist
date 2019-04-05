@@ -1,6 +1,5 @@
 import React from 'react';
 import Task from '../components/task.component';
-import CSSTransition from 'react-transition-group';
 import styled from 'styled-components'; 
 import * as colors from '../styles/colors';
 import PropTypes from 'prop-types';
@@ -19,7 +18,7 @@ export default class Tasks extends React.Component {
 
 
     componentWillMount() {
-        console.log('init not_started status: ', this.state.not_started);
+        // console.log('init not_started status: ', this.state.not_started);
         this.state.tasks.filter(task => {
             if (task.status === 'complete') {
                 this.state.complete.push(task);
@@ -36,7 +35,7 @@ export default class Tasks extends React.Component {
     handleCompletedTask = (e) => {
         this.setState(state => {
             const tasks = state.not_started.map((task, index) => {
-                console.log('e', e, 'index', index);
+                // console.log('e', e, 'index', index);
                 if (index === e) {
                     task.status = 'complete'
                     state.complete.unshift(task);

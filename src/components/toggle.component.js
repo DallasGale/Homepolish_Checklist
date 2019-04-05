@@ -8,11 +8,11 @@ const StyledButton = styled.button`
   border: ${props => props.buttonState === 'complete' ? '2px' : '1px'} solid;
   border-radius: 100%;
   border-color: ${props => props.buttonState === 'complete' ? `${colors.THEME_MEDIUM_GREY}` : `${colors.THEME_NOT_STARTED}`};
-  cursor: pointer;
+  cursor: ${props => props.buttonState === 'complete' ? 'auto' : 'pointer'};
   height: 1.3em;
   width: 1.3em;
   &:hover {
-    background-color: ${colors.THEME_NOT_STARTED};
+    background-color: ${props => props.buttonState === 'complete' ? `${colors.THEME_COMPLETED}` : `${colors.THEME_NOT_STARTED}`};
     transition: all 0.3s;
   }
 `;
