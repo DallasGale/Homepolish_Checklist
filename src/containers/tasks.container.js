@@ -1,6 +1,8 @@
 import React from 'react';
 import Task from '../components/task.component';
+import CSSTransition from 'react-transition-group';
 import styled from 'styled-components'; 
+import * as colors from '../styles/colors';
 import PropTypes from 'prop-types';
 
 
@@ -10,7 +12,8 @@ export default class Tasks extends React.Component {
         this.state = {
             tasks: this.props.tasks,
             not_started: [],
-            complete: []
+            complete: [],
+            toggledTodo: false
         }
     }
 
@@ -20,8 +23,10 @@ export default class Tasks extends React.Component {
         this.state.tasks.filter(task => {
             if (task.status === 'complete') {
                 this.state.complete.push(task);
+                return this.state.complete;
             } else {
                 this.state.not_started.push(task);
+                return this.state.not_started;
             }
         })
     }
@@ -36,48 +41,59 @@ export default class Tasks extends React.Component {
                     task.status = 'complete'
                     state.complete.unshift(task);
                     state.not_started.splice((index, e), 1)
-                    return;
+                    return task;
                 }
-                else return;
+                else return task;
             });
             return tasks;
         });
+
+        this.setState({
+            toggledTodo: !this.state.toggledTodo
+        });
+
     }
 
     render() {
         return (
             <StyledWrapper>
-                <h2>NOT STARTED</h2>
-                <ul>
-                    {
-                        this.state.not_started.map((task, index) => {
-                        return (
-                            <Task key={task.id} 
-                                clicked={ () => this.handleCompletedTask(index) }
-                                status='not_started'
-                                task={ task.description }
-                                value={ task.id } />
-                           
-                            )
-                        })
-                    }
-                </ul>
+                <StyledContent>
+                    <StylesH2>TO DO</StylesH2>
+                    <StylesUl>
+                        {
+                            this.state.not_started.map((task, index) => {
+                            return (
+                                <Task key={task.id} 
+                                    clicked={ () => this.handleCompletedTask(index) }
+                                    status='not_started'
+                                    task={ task.description }
+                                    value={ task.id } />
+                            
+                                )
+                            })
+                        }
+                    </StylesUl>
+                </StyledContent>
 
-
-                <h2>COMPLETED</h2>
-                
-                <ul>
-                    {
-                        this.state.complete.map(task => {
-                        return (
-                            <Task key={ task.id } 
-                                status='complete'
-                                task={ task.description }
-                                value={ task.id } />
-                            )
-                        })
-                    }
-                </ul>
+                <StyledContent>
+                    <StylesH2 color="#b8b8b8">
+                        {this.state.complete.length} TASKS COMPLETED
+                    </StylesH2>
+                    
+                    <StylesUl>
+                        {
+                            this.state.complete.map(task => {
+                            return (
+                                <Task key={ task.id } 
+                                    completed="pink"
+                                    status='complete'
+                                    task={ task.description }
+                                    value={ task.id } />
+                                )
+                            })
+                        }
+                    </StylesUl>
+                </StyledContent>
             </StyledWrapper>
         );
     }
@@ -88,4 +104,19 @@ const StyledWrapper = styled.div`
   max-width: 600px;
   margin: 0 auto;
   position: relative;
+`;
+
+const StyledContent = styled.div`
+    background: ${colors.THEME_LIGHT_GREY};
+    padding: 1em 2em;
+`;
+
+const StylesUl = styled.ul`
+    padding-left: 0;
+`;
+
+const StylesH2 = styled.h2`
+    color: ${props => props.color || colors.BLACK };
+    font-size: 0.8em;
+    letter-spacing: 0.2em;
 `;
