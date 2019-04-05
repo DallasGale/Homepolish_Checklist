@@ -1,4 +1,5 @@
 import React from 'react';
+import Tasks from '../containers/tasks.container';
 import styled from 'styled-components'
 
 const StyledChecklist = styled.div`
@@ -10,7 +11,7 @@ const StyledChecklist = styled.div`
 
 const Checklist = ({ tasks }) => (
   <StyledChecklist> 
-    <div>The checklist</div>
+    <Tasks tasks={tasks} />
   </StyledChecklist>
 );
 

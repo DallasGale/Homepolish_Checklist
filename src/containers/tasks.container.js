@@ -1,9 +1,7 @@
 import React from 'react';
-import Task from '../components/task.component';
+import TaskList from '../components/taskList.component';
 import styled from 'styled-components'; 
 import * as colors from '../styles/colors';
-import PropTypes from 'prop-types';
-
 
 export default class Tasks extends React.Component {
     constructor(props) {
@@ -16,9 +14,8 @@ export default class Tasks extends React.Component {
         }
     }
 
-
+    // Filter exisiting tasks into their default status on load...
     componentWillMount() {
-        // console.log('init not_started status: ', this.state.not_started);
         this.state.tasks.filter(task => {
             if (task.status === 'complete') {
                 this.state.complete.push(task);
@@ -31,11 +28,10 @@ export default class Tasks extends React.Component {
     }
     
 
-
+    // Handler to assign task to 'complete' status
     handleCompletedTask = (e) => {
         this.setState(state => {
             const tasks = state.not_started.map((task, index) => {
-                // console.log('e', e, 'index', index);
                 if (index === e) {
                     task.status = 'complete'
                     state.complete.unshift(task);
@@ -50,72 +46,53 @@ export default class Tasks extends React.Component {
         this.setState({
             toggledTodo: !this.state.toggledTodo
         });
+    }
+
+    // Handler to re-assign task back to 'not_started' status
+    handleRevertTask = (e) => {
+        this.setState(state => {
+            const tasks = state.complete.map((task, index) => {
+                console.log(index, e);
+                if (index === e) {
+
+                    task.status = 'not_started'
+                    state.not_started.unshift(task);
+                    state.complete.splice((index, e), 1)
+                    console.log(e);
+                    return task;
+                }
+                else return task;
+            });
+            return tasks;
+        });
 
     }
+
 
     render() {
         return (
             <StyledWrapper>
-                <StyledContent>
-                    <StylesH2>TO DO</StylesH2>
-                    <StylesUl>
-                        {
-                            this.state.not_started.map((task, index) => {
-                            return (
-                                <Task key={task.id} 
-                                    clicked={ () => this.handleCompletedTask(index) }
-                                    status='not_started'
-                                    task={ task.description }
-                                    value={ task.id } />
-                            
-                                )
-                            })
-                        }
-                    </StylesUl>
-                </StyledContent>
+                <TaskList 
+                    clicked={this.handleCompletedTask} 
+                    data={this.state.not_started}  
+                    status='not_started' 
+                    title="To do" />
 
-                <StyledContent>
-                    <StylesH2 color="#b8b8b8">
-                        {this.state.complete.length} TASKS COMPLETED
-                    </StylesH2>
-                    
-                    <StylesUl>
-                        {
-                            this.state.complete.map(task => {
-                            return (
-                                <Task key={ task.id } 
-                                    completed="pink"
-                                    status='complete'
-                                    task={ task.description }
-                                    value={ task.id } />
-                                )
-                            })
-                        }
-                    </StylesUl>
-                </StyledContent>
+                <TaskList 
+                    count={this.state.complete.length} 
+                    clicked={this.handleRevertTask}
+                    data={this.state.complete} 
+                    status='complete' 
+                    title="Tasks Completed"  />
             </StyledWrapper>
         );
     }
 }
 
-
 const StyledWrapper = styled.div`
-  max-width: 600px;
-  margin: 0 auto;
-  position: relative;
-`;
-
-const StyledContent = styled.div`
     background: ${colors.THEME_LIGHT_GREY};
-    padding: 1em 2em;
-`;
-
-const StylesUl = styled.ul`
-    padding-left: 0;
-`;
-
-const StylesH2 = styled.h2`
-    color: ${props => props.color || colors.BLACK };
-    font-size: 0.8em;
-    letter-spacing: 0.2em;
+    max-width: 510px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
 `;
