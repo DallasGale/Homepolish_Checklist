@@ -3,9 +3,11 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types';
 
 const Button = (props) => {
+
     const { clicked, value } = props;
+
     return (
-        <StyledButtonWrapper onClick={clicked} value={value}>
+        <StyledButtonWrapper className="button" onClick={clicked} value={value}>
             <StyledButton>
                 <StyledButtonInner />
             </StyledButton>
@@ -45,6 +47,5 @@ const StyledButtonInner = styled.div`
     position: relative;
     top: 1px;
 `;
-
 
 export default Button;

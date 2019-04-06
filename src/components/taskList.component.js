@@ -6,12 +6,7 @@ import PropTypes from 'prop-types';
 
 const TaskList = (props) => {
     
-    const { 
-        count, 
-        clicked, 
-        data, 
-        title, 
-        status } = props;
+    const { count, clicked, data, title, status } = props;
 
     return (
         <StyledContent>
@@ -55,16 +50,6 @@ const TaskList = (props) => {
     )
 };
 
-
-Task.propTypes = {
-    count: PropTypes.number,
-    clicked: PropTypes.func, 
-    data: PropTypes.array,
-    title: PropTypes.string,
-    status: PropTypes.string,
-}
-
-
 const StyledContent = styled.div`
     padding: 1em 1.3em 0 1.3em;
     &:last-child {
@@ -89,5 +74,12 @@ const StylesH2 = styled.h2`
     text-transform: uppercase;
 `;
 
+Task.propTypes = {
+    count: PropTypes.number,
+    clicked: PropTypes.func, 
+    data: PropTypes.array,
+    title: PropTypes.string,
+    status: PropTypes.string,
+};
 
 export default TaskList;

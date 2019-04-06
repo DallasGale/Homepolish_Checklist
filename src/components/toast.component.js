@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components'; 
 import * as colors from '../styles/colors';
-
+import PropTypes from 'prop-types';
 
 const Toast = (props) => {
 
-    const { task, mounted } = props;
-    
-    // const [mounted, setMount] = useState();
-    // useEffect(() => {
-    //     setMount(true)
-    // });
+    const { task, toastMounted } = props;
 
     return (
-        <StyledToast visible={ mounted }>
+        <StyledToast visible={ toastMounted }>
             { task }
         </StyledToast> 
     )
@@ -37,5 +32,9 @@ const StyledToast = styled.div`
     width: auto;
 `;
 
+Toast.propTypes = {
+    task: PropTypes.string,
+    toastMounted: PropTypes.bool,
+}
 
 export default Toast;

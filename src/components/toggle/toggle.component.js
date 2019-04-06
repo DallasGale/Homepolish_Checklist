@@ -6,6 +6,7 @@ import styled from 'styled-components'
 const Toggle = (props) => {
 
     const { clicked, status, value } = props;
+
     return (
         <React.Fragment>
           { status === 'not_started' ?
@@ -23,13 +24,7 @@ const Toggle = (props) => {
           }
         </React.Fragment>
     )
-}
-
-Toggle.propTypes = {
-  clicked: PropTypes.any,
-  isCompleted: PropTypes.string,
-  value: PropTypes.string,
-}
+};
 
 const StyledButton = styled.button`
     border: 0;
@@ -65,5 +60,11 @@ const StyledButtonInner = styled.div`
       transition: all 0.3s;
     }
 `;
+
+Toggle.propTypes = {
+  clicked: PropTypes.func,
+  isCompleted: PropTypes.string,
+  value: PropTypes.string,
+}
 
 export default Toggle;

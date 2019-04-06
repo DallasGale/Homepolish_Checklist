@@ -1,10 +1,10 @@
 import React from 'react';
 import TaskList from '../components/taskList.component';
 import styled from 'styled-components'; 
-import ToastContainer from './toast.container';
+import Toast from '../components/toast.component';
 import * as colors from '../styles/colors';
 
-export default class Tasks extends React.Component {
+class Tasks extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,11 +15,10 @@ export default class Tasks extends React.Component {
             toasts: [],
             toggledTodo: false,
             showToast: false,
-            mounted: false
+            toastMounted: false
         }
     }
 
-    // Filter exisiting tasks into their default status on load...
     componentWillMount() {
         this.state.tasks.filter(task => {
             if (task.status === 'complete') {
@@ -32,16 +31,11 @@ export default class Tasks extends React.Component {
         })
     }
 
-    
-    
-
-    // Handler to assign task to 'complete' status
-    handleCompletedTask = (e) => {
-
-
-        // clearInterval(this.toastTimer());
+    handleCompleteStatus = (e) => {
         this.setState(state => {
-           
+            state.toggledTodo =  !this.state.toggledTodo;
+            state.toastMounted = true;
+
             const tasks = state.not_started.map((task, index) => {
                 if (index === e) {
                     task.status = 'complete'
@@ -49,88 +43,70 @@ export default class Tasks extends React.Component {
                     state.not_started.splice((index, e), 1)
                     state.clickedTask = `Completed  "${task.description}."`
                     state.showToast = true;
-
-                    // Hide toast after time...
-                    // if (this.state.showToast) {
-                    //     this.toastTimer();
-
-                    // } else return;
-
                     return task;
                 }
                 else return task;
             });
             return tasks;
         });
-
-        this.setState({
-            toggledTodo: !this.state.toggledTodo,
-            mounted: true
-        });
-        
         this.handleTime();
-
-
-
-
     }
 
-    // Handler to re-assign task back to 'not_started' status
-    handleRevertTask = (e) => {
+    handleRevertStatus = (e) => {
         this.setState(state => {
             const tasks = state.complete.map((task, index) => {
                 if (index === e) {
-
                     task.status = 'not_started'
                     state.not_started.unshift(task);
                     state.complete.splice((index, e), 1)
                     state.clickedTask = `Not Started  "${task.description}."`
                     state.showToast = true;
-                    
                     return task;
                 }
                 else return task;
-
             });
             return tasks;
         });
-
     }
 
     handleTime = () => {
-        console.log('start');
         setTimeout(() => {
             this.setState({
-                mounted: false
+                toastMounted: false
             })
-        }, 3000);
-        console.log('finish');
+        }, 1000);
     }
-
 
     render() {
         return (
             <StyledWrapper>
-                {/* <div style={{opacity: `${this.state.showToast ? 1 : 0}`}}> */}
-                    {/* <ToastContainer task={this.state.clickedTask} showToast={this.state.showToast} mounted={this.state.mounted} /> */}
-                {/* </div> */}
                 { this.state.showToast 
                     ? 
-                    <ToastContainer task={this.state.clickedTask} showToast={this.state.showToast}  mounted={this.state.mounted}/>
+                    <Toast 
+                        task={this.state.clickedTask} 
+                        showToast={this.state.showToast}  
+                        toastMounted={this.state.toastMounted}/>
                     : '' 
                 }
                 <TaskList 
-                    clicked={this.handleCompletedTask} 
+                    clicked={this.handleCompleteStatus} 
                     data={this.state.not_started}  
                     status='not_started' 
-                    title="To do" />
+                    title={`
+                        ${this.state.not_started.length !== 0 
+                        ? 'To do' 
+                        : 'No Todo\'s'}`} />
 
                 <TaskList 
-                    count={this.state.complete.length} 
-                    clicked={this.handleRevertTask}
+                    clicked={this.handleRevertStatus}
                     data={this.state.complete} 
                     status='complete' 
-                    title="Tasks Completed"  />
+                    title="Tasks Completed"
+                    count={`
+                        ${this.state.not_started.length > 0 
+                        ? this.state.complete.length 
+                        : '🎉 ALL'} 
+                    `} />
             </StyledWrapper>
         );
     }
@@ -143,3 +119,5 @@ const StyledWrapper = styled.div`
     width: 100%;
     position: relative;
 `;
+
+export default Tasks;

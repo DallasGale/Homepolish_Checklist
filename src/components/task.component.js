@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 const Task = (props) => {
 
     const [mounted, setMount] = useState(false);
+
     useEffect(() => setMount(true));
 
     return (
@@ -17,11 +18,7 @@ const Task = (props) => {
             </StyledText>
         </StyledTask>
     )
-}
-
-Task.propTypes = {
-    task: PropTypes.string,
-}
+};
 
 const StyledTask = styled.div`
     align-items: center;
@@ -39,4 +36,9 @@ const StyledText = styled.div`
     color: ${ colors.BLACK };
     font-size: 0.85em;
 `;
+
+Task.propTypes = {
+    task: PropTypes.string,
+}
+
 export default Task;
