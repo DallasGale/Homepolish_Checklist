@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'; 
-import * as colors from '../styles/colors';
+import * as colors from '../../styles/colors';
 import PropTypes from 'prop-types';
 
 const Toast = (props) => {
@@ -14,7 +14,7 @@ const Toast = (props) => {
     )
 }
 
-const StyledToast = styled.div`
+export const StyledToast = styled.div`
     background: ${colors.BLACK};    
     box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.18);
     border-radius: 30px;

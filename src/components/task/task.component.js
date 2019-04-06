@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Toggle from './toggle/toggle.component';
+import Toggle from '../toggle/toggle.component';
 import styled from 'styled-components';
-import * as colors from '../styles/colors';
+import * as colors from '../../styles/colors';
 import PropTypes from 'prop-types';
 
 const Task = (props) => {

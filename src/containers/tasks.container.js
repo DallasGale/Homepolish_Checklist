@@ -1,7 +1,7 @@
 import React from 'react';
-import TaskList from '../components/taskList.component';
+import List from '../components/list/list.component';
 import styled from 'styled-components'; 
-import Toast from '../components/toast.component';
+import Toast from '../components/toast/toast.component';
 import * as colors from '../styles/colors';
 
 class Tasks extends React.Component {
@@ -54,6 +54,7 @@ class Tasks extends React.Component {
 
     handleRevertStatus = (e) => {
         this.setState(state => {
+            state.toastMounted = true;
             const tasks = state.complete.map((task, index) => {
                 if (index === e) {
                     task.status = 'not_started'
@@ -67,6 +68,7 @@ class Tasks extends React.Component {
             });
             return tasks;
         });
+        this.handleTime();
     }
 
     handleTime = () => {
@@ -82,13 +84,13 @@ class Tasks extends React.Component {
             <StyledWrapper>
                 { this.state.showToast 
                     ? 
-                    <Toast 
+                    <Toast className="toast" 
                         task={this.state.clickedTask} 
                         showToast={this.state.showToast}  
                         toastMounted={this.state.toastMounted}/>
                     : '' 
                 }
-                <TaskList 
+                <List 
                     clicked={this.handleCompleteStatus} 
                     data={this.state.not_started}  
                     status='not_started' 
@@ -97,7 +99,7 @@ class Tasks extends React.Component {
                         ? 'To do' 
                         : 'No Todo\'s'}`} />
 
-                <TaskList 
+                <List 
                     clicked={this.handleRevertStatus}
                     data={this.state.complete} 
                     status='complete' 

@@ -1,10 +1,10 @@
 import React from 'react';
-import Task from './task.component';
+import Task from '../task/task.component';
 import styled from 'styled-components'; 
-import * as colors from '../styles/colors';
+import * as colors from '../../styles/colors';
 import PropTypes from 'prop-types';
 
-const TaskList = (props) => {
+const List = (props) => {
     
     const { count, clicked, data, title, status } = props;
 
@@ -74,12 +74,12 @@ const StylesH2 = styled.h2`
     text-transform: uppercase;
 `;
 
-Task.propTypes = {
-    count: PropTypes.number,
+List.propTypes = {
+    count: PropTypes.string,
     clicked: PropTypes.func, 
     data: PropTypes.array,
     title: PropTypes.string,
     status: PropTypes.string,
 };
 
-export default TaskList;
+export default List;
