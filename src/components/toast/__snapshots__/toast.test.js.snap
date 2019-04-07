@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Toast /> will render without exploding! 1`] = `
+.c0 {
+  background: #2b2b2b;
+  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.18);
+  border-radius: 30px;
+  color: white;
+  font-size: 0.9em;
+  line-height: 2.5em;
+  height: auto;
+  opacity: 0;
+  padding: 2px 30px 5px;
+  position: fixed;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  right: 20px;
+  top: 5px;
+  text-align: center;
+  width: auto;
+}
+
+<div
+  className="c0"
+/>
+`;

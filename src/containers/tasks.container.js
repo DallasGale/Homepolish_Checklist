@@ -1,5 +1,6 @@
 import React from 'react';
 import List from '../components/list/list.component';
+import ListTitle from '../components/list/listTitle.component';
 import styled from 'styled-components'; 
 import Toast from '../components/toast/toast.component';
 import * as colors from '../styles/colors';
@@ -93,22 +94,30 @@ class Tasks extends React.Component {
                 <List 
                     clicked={this.handleCompleteStatus} 
                     data={this.state.not_started}  
-                    status='not_started' 
-                    title={`
-                        ${this.state.not_started.length !== 0 
-                        ? 'To do' 
-                        : 'No Todo\'s'}`} />
+                    status='not_started' >
+                    <ListTitle>
+                        {`
+                            ${this.state.not_started.length !== 0 
+                            ? 'To do' 
+                            : 'No Todo\'s'}`
+                        }
+                    </ListTitle>
+
+                </List>
 
                 <List 
                     clicked={this.handleRevertStatus}
                     data={this.state.complete} 
-                    status='complete' 
-                    title="Tasks Completed"
-                    count={`
-                        ${this.state.not_started.length > 0 
-                        ? this.state.complete.length 
-                        : '🎉 ALL'} 
-                    `} />
+                    status='complete'>
+
+                    <ListTitle color='grey'>
+                        {` ${this.state.not_started.length > 0 
+                            ? this.state.complete.length + ' Tasks Completed'
+                            : '🎉 All Tasks Completed!'} 
+                        `}
+                    </ListTitle>
+
+                </List>
             </StyledWrapper>
         );
     }

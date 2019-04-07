@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Task /> will render without exploading! 1`] = `
+<div
+  className="sc-bxivhb gyNEet"
+>
+  <button
+    className="sc-bdVaJa efOOzp"
+    onClick={undefined}
+    value={undefined}
+  >
+    <div
+      className="sc-bwzfXH fvXDKP"
+    >
+      <div
+        className="sc-htpNat ehtoVH"
+      />
+    </div>
+  </button>
+  <div
+    className="sc-ifAKCX bSWLRl"
+  />
+</div>
+`;

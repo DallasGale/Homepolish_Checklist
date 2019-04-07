@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toggle will render without exploding! 1`] = `
+.c1 {
+  background: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  border: 1px solid;
+  border-color: #f2c7bc;
+  position: relative;
+  margin: 0 auto;
+}
+
+.c2 {
+  background-color: #fff;
+  width: 18px;
+  height: 18px;
+  border-radius: 15px;
+  margin: 0 auto;
+  position: relative;
+  top: 1px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.c2:hover {
+  background-color: #f2c7bc;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.c0 {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  position: relative;
+}
+
+<button
+  className="c0"
+  onClick={undefined}
+  value={undefined}
+>
+  <div
+    className="c1"
+  >
+    <div
+      className="c2"
+    />
+  </div>
+</button>
+`;

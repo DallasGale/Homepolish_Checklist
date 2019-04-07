@@ -8,21 +8,15 @@ const Toggle = (props) => {
     const { clicked, status, value } = props;
 
     return (
-        <React.Fragment>
-          { status === 'not_started' ?
-            <StyledButton onClick={clicked} value={value}>
-                <StyledButtonBorder>
-                    <StyledButtonInner />
+            <StyledButton 
+              taskStatus={status}
+              onClick={clicked} 
+              value={value}>
+                <StyledButtonBorder
+                  taskStatus={status}>
+                    <StyledButtonInner taskStatus={status} />
                 </StyledButtonBorder>
             </StyledButton>
-            : 
-            <StyledButton buttonState="complete" onClick={clicked} value={value}>
-              <StyledButtonBorder buttonState="complete">
-                  <StyledButtonInner buttonState="complete" />
-                </StyledButtonBorder>
-            </StyledButton>
-          }
-        </React.Fragment>
     )
 };
 
@@ -36,18 +30,18 @@ const StyledButton = styled.button`
     padding: 0;
     position: relative;
 `;
-const StyledButtonBorder = styled.div`
+export const StyledButtonBorder = styled.div`
     background: white;
     width: 20px;
     height: 20px;
     border-radius: 20px;
     border: 1px solid;
-    border-color: ${props => props.buttonState === 'complete' ? `${colors.THEME_COMPLETED}` : `${colors.THEME_NOT_STARTED}`};
+    border-color: ${props => props.taskStatus === 'complete' ? `${colors.THEME_COMPLETED}` : `${colors.THEME_NOT_STARTED}`};
     position: relative;
     margin: 0 auto;
 `;
-const StyledButtonInner = styled.div`
-    background-color: ${props => props.buttonState === 'complete' ? `${colors.THEME_COMPLETED}` : `${colors.WHITE}`}; 
+export const StyledButtonInner = styled.div`
+    background-color: ${props => props.taskStatus === 'complete' ? `${colors.THEME_COMPLETED}` : `${colors.WHITE}`}; 
     width: 18px;
     height: 18px;
     border-radius: 15px;
@@ -56,7 +50,7 @@ const StyledButtonInner = styled.div`
     top: 1px;
     transition: all 0.3s;
     &:hover {
-      background-color: ${props => props.buttonState === 'complete' ? `${colors.BLACK}` : `${colors.THEME_NOT_STARTED}`};
+      background-color: ${props => props.taskStatus === 'complete' ? `${colors.BLACK}` : `${colors.THEME_NOT_STARTED}`};
       transition: all 0.3s;
     }
 `;

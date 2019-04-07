@@ -4,30 +4,45 @@ import { shallow, mount } from 'enzyme';
 import renderer from 'react-test-renderer'
 import 'jest-styled-components'
 
+const toast = mount(<Toast />);
+const styledToast = shallow(<StyledToast />)
+
 
 describe('<Toast />', () => {
-    it('returns a task name when a value is assigned to "task" prop', () => {
-        const wrapper = mount(<Toast task="Task #1" />);
-        expect(wrapper.props().task).toBe('Task #1')
-        
-        wrapper.setProps({ task: 'Task #2' });
-        expect(wrapper.props().task).toBe('Task #2');
+
+    it('will render without exploding!', () => {
+        const tree = renderer.create(<Toast />).toJSON()
+        expect(tree).toMatchSnapshot();
+    })
+    
+    it('returns the task name', () => {
+        toast.setProps({
+            task: 'Task #1'
+        })
+        expect(toast.props().task).toBe('Task #1')
     });
 
-    it('"toastMounted" prop returns a boolean', () => {
-        const wrapper = mount(<Toast toastMounted />);
-        expect(wrapper.props().toastMounted).toBe(true);
-    })
+    describe('when task status is set to "complete"', () => {
+        it('"opacity" will be set to "1"', () => {
+            styledToast.setProps({
+                visible: true
+            })
+            expect(styledToast).toHaveStyleRule('opacity', '1');
+        })
+    });
 
-    it('opacity is set to 0 when "visible" prop is false', () => {
-        const styled = shallow(<StyledToast visible={false} />)
-        expect(styled).toHaveStyleRule('opacity', '0');
-    })
+    
+    describe('when task status is set to "not_started"', () => {
+        it('"opacity" will be set to "0"', () => {
+            styledToast.setProps({
+                visible: false
+            })
+            expect(styledToast).toHaveStyleRule('opacity', '0');
+        })
+    });
 
-    it('opacity is set to 1 when "visible" prop is true', () => {
-        const styled = shallow(<StyledToast visible={true} />)
-        expect(styled).toHaveStyleRule('opacity', '1');
-    })
+    
+
 });
 
 

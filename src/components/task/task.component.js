@@ -6,15 +6,22 @@ import PropTypes from 'prop-types';
 
 const Task = (props) => {
 
+    const { status, task } = props;
+
     const [mounted, setMount] = useState(false);
 
     useEffect(() => setMount(true));
 
     return (
         <StyledTask visible={mounted}>
-            <Toggle {...props }/>
+            {
+                status === 'not_started' ?
+                    <Toggle {...props } status="not_started" />
+                    :
+                    <Toggle {...props } status="complete" />
+            }
             <StyledText>
-                { props.task }
+                { task }
             </StyledText>
         </StyledTask>
     )
