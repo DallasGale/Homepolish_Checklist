@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<List /> will render without exploading! 1`] = `
+<div
+  className="sc-EHOje jNRjeF"
+>
+  <ul
+    className="sc-bZQynM ebnWYe"
+  />
+</div>
+`;

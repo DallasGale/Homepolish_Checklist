@@ -3,6 +3,7 @@ import List from '../components/list/list.component';
 import ListTitle from '../components/list/listTitle.component';
 import styled from 'styled-components'; 
 import Toast from '../components/toast/toast.component';
+import ErrorBoundary from './errorBoundary.container';
 import * as colors from '../styles/colors';
 
 class Tasks extends React.Component {
@@ -82,43 +83,45 @@ class Tasks extends React.Component {
 
     render() {
         return (
-            <StyledWrapper>
-                { this.state.showToast 
-                    ? 
-                    <Toast className="toast" 
-                        task={this.state.clickedTask} 
-                        showToast={this.state.showToast}  
-                        toastMounted={this.state.toastMounted}/>
-                    : '' 
-                }
-                <List 
-                    clicked={this.handleCompleteStatus} 
-                    data={this.state.not_started}  
-                    status='not_started' >
-                    <ListTitle>
-                        {`
-                            ${this.state.not_started.length !== 0 
-                            ? 'To do' 
-                            : 'No Todo\'s'}`
-                        }
-                    </ListTitle>
+            <ErrorBoundary>
+                <StyledWrapper>
+                    { this.state.showToast 
+                        ? 
+                        <Toast className="toast" 
+                            task={this.state.clickedTask} 
+                            showToast={this.state.showToast}  
+                            toastMounted={this.state.toastMounted}/>
+                        : '' 
+                    }
+                    <List 
+                        clicked={this.handleCompleteStatus} 
+                        data={this.state.not_started}  
+                        status='not_started' >
+                        <ListTitle>
+                            {`
+                                ${this.state.not_started.length !== 0 
+                                ? 'To do' 
+                                : 'No Todo\'s'}`
+                            }
+                        </ListTitle>
 
-                </List>
+                    </List>
 
-                <List 
-                    clicked={this.handleRevertStatus}
-                    data={this.state.complete} 
-                    status='complete'>
+                    <List 
+                        clicked={this.handleRevertStatus}
+                        data={this.state.complete} 
+                        status='complete'>
 
-                    <ListTitle color='grey'>
-                        {` ${this.state.not_started.length > 0 
-                            ? this.state.complete.length + ' Tasks Completed'
-                            : '🎉 All Tasks Completed!'} 
-                        `}
-                    </ListTitle>
+                        <ListTitle color='grey'>
+                            {` ${this.state.not_started.length > 0 
+                                ? this.state.complete.length + ' Tasks Completed'
+                                : '🎉 All Tasks Completed!'} 
+                            `}
+                        </ListTitle>
 
-                </List>
-            </StyledWrapper>
+                    </List>
+                </StyledWrapper>
+            </ErrorBoundary>
         );
     }
 }

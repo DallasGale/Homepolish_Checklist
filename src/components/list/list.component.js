@@ -1,30 +1,37 @@
 import React from 'react';
 import Task from '../task/task.component';
 import styled from 'styled-components'; 
+import ErrorBoundary from '../../containers/errorBoundary.container';
 import PropTypes from 'prop-types';
 
 const List = (props) => {
     
-    const { count, children, clicked, data, title, status } = props;
+    const { 
+        children, 
+        clicked, 
+        data, 
+        status } = props;
 
     return (
-        <StyledContent>
-            { children }
-            <StylesUl>
-                {
-                    data.map((task, arrIndex) => {
-                    return (
-                        <Task key={task.id} 
-                            clicked={ () => clicked(arrIndex) }
-                            status={ status }
-                            task={ task.description }
-                            value={ task.id } />
-                    
-                        )
-                    })
-                }
-            </StylesUl>    
-    </StyledContent>
+        <ErrorBoundary>
+            <StyledContent>
+                { children }
+                <StylesUl>
+                    {
+                        data.map((task, arrIndex) => {
+                        return (
+                            <Task key={task.id} 
+                                clicked={ () => clicked(arrIndex) }
+                                status={ status }
+                                task={ task.description }
+                                value={ task.id } />
+                        
+                            )
+                        })
+                    }
+                </StylesUl>    
+            </StyledContent>
+        </ErrorBoundary>
     )
 };
 
